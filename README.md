@@ -3,10 +3,9 @@
 This repository contains an implementation for (semi-)automated assessments of artificial intelligence (AI) conformity.
 
 # Installation 
-
+To install the required packages, run the following:
 ```
-# install.packages("remotes")
-remotes::install_github("https://github.com/mlowin/conformity_assessment")
+pip install -r requirements.txt
  ```
 
 The implementation is dependent on several other packages for handling data, modeling, and generating reports: pandas, ...

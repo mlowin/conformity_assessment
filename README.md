@@ -3,12 +3,11 @@
 This repository contains an implementation for (semi-)automated assessments of artificial intelligence (AI) conformity.
 
 # Installation 
+The implementation is dependent on several other packages for handling data, modeling, and generating reports: pandas, ...
 To install the required packages, run the following:
 ```
 pip install -r requirements.txt
  ```
-
-The implementation is dependent on several other packages for handling data, modeling, and generating reports: pandas, ...
 
 # Usage
 

@@ -21,8 +21,6 @@ Conformity assessments can be run on the exemplary use case of fraud detection:
 + ...
 - ...
 
-```
-
 
 # Citation
 Please consider citing us if you find this helpful for your work:

@@ -1,0 +1,38 @@
+{
+    "fairness": {
+        "title": "Fairness",
+        "children": {
+            "statistical_parity": {
+                "title": "Statistical Parity"
+            },
+            "equalized_odds": {
+                "title": "Equalized Odds"
+            },
+            "theil_index":{
+                "title": "Theil Index"
+            }
+        }
+    },
+    "explainability":{
+        "title": "Explainability",
+        "children": {
+            "stability_of_local_explainability": {
+                "title":"Stability of local explainability"
+            },
+            "question_items": {
+                "title":"Question items"
+            }
+        }
+    },
+    "performance":{
+        "title": "Performance",
+        "children": {
+            "precision": {
+                "title":"Precision"
+            },
+            "recall": {
+                "title":"Recall"
+            }
+        }
+    }
+}

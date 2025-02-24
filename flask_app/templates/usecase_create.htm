@@ -1,0 +1,167 @@
+{% extends 'default.htm' %}
+
+
+{% block content %}
+<style>
+  small{
+    color: #888;
+    font-size: 0.7em;
+    margin-left: 5px;
+  }
+  .info.usecase{
+    margin-left: 6px !important; 
+    margin-top: 6px;
+  }
+  h2, h3{
+    margin-top: 50px;
+  }
+  h2:first-child,h3:first-child{
+    margin-top: 20px;
+  }
+</style>
+    <form method="post" action="/usecase{% if uid > 0 %}/{{uid}}{% endif %}">
+    <h1>{% if uid > 0 %}Edit{% else %}Create{% endif %} Use Case</h1>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Title of Use Case</span>
+        </div>
+        <input type="text" class="form-control" name="title" value="{{title}}" placeholder="Title of Use Case">
+        <div class="info usecase" data-bs-toggle="tooltip" data-bs-placement="right" title="Select a proper use case title, e.g., 'fraud detection' or 'spam filtering'"></div>
+    </div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Short Description Text for Use Case</i></span>
+        </div>
+        <textarea class="form-control" name="description" placeholder="Short Description Text for Use Case">{{description}}</textarea>
+        <div class="info usecase" data-bs-toggle="tooltip" data-bs-placement="right" title="Descripe the use case in a few words. This description is visible for the use case selection on the landing page."></div>
+
+    </div>
+    {% for item_key, item in structure.items() %}
+      {% if item_key != 'questions' %}
+        <h2>{{item.title}}</h2>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Description Text for&nbsp;<i>{{item.title}}</i></span>
+            </div>
+            <textarea class="form-control" name="description_{{item_key}}" placeholder="Description Text for {{item.title}}">{{item['description']}}</textarea>
+            <div class="info usecase" data-bs-toggle="tooltip" data-bs-placement="right" title="{{item.default_description}}"></div>
+
+        </div>
+        {% for sub_key, sub in item.children.items() %}
+            <h4>{{sub.title}}</h4>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><label for="active_{{sub_key}}">Relevant for Use Case</label></span>
+                </div>
+                <div class="form-control">
+                    <input type="checkbox" name="active_{{sub_key}}" id="active_{{sub_key}}" {% if uid > 0 and sub.rules.active %} checked="checked" {% endif %}>
+                </div>
+               <div class="info usecase" data-bs-toggle="tooltip" data-bs-placement="right" title="{{sub.default_description}}"></div>
+
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Minimum Value for Green <small>x &ge; min</small></span>
+                </div>
+                <input type="text" class="form-control" name="green_min_{{sub_key}}" value="{% if uid > 0 %}{{sub.rules.green_min}}{% endif %}" placeholder="Minimum Value for Green">
+                <div class="info usecase" data-bs-toggle="tooltip" data-bs-placement="right" title="A typical value for this item is {{sub.default_green_min}}"></div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Maximum Value for Green <small>x &le; max</small></span>
+                </div>
+                <input type="text" class="form-control" name="green_max_{{sub_key}}" value="{% if uid > 0 %}{{sub.rules.green_max}}{% endif %}" placeholder="Maximum Value for Green">
+                <div class="info usecase" data-bs-toggle="tooltip" data-bs-placement="right" title="A typical value for this item is {{sub.default_green_max}}"></div>
+
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Minimum Value for Yellow <small>x &gt; min</small></span>
+                </div>
+                <input type="text" class="form-control" name="yellow_min_{{sub_key}}" value="{% if uid > 0 %}{{sub.rules.yellow_min}}{% endif %}" placeholder="Minimum Value for Yellow">
+                <div class="info usecase" data-bs-toggle="tooltip" data-bs-placement="right" title="A typical value for this item is {{sub.default_yellow_min}}"></div>
+
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Maximum Value for Yellow <small>x &lt; max</small></span>
+                </div>
+                <input type="text" class="form-control" name="yellow_max_{{sub_key}}" value="{% if uid > 0 %}{{sub.rules.yellow_max}}{% endif %}" placeholder="Maximum Value for Yellow">
+                <div class="info usecase" data-bs-toggle="tooltip" data-bs-placement="right" title="A typical value for this item is {{sub.default_yellow_max}}"></div>
+
+            </div>
+            
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+    <h2>Question Catalogue</h2>
+    {% for category, cat_questions in questions.items() %}
+        <h3>{{category}}</h3>
+        {% for question_id, question in cat_questions.items() %}
+          <h4>Question: {{question.description}}</h4>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><label for="question-{{question_id}}" class="form-label">Use Question for Use Case</label></span>
+            </div>
+            <div class="form-control">
+              <input type="checkbox" id="question-{{question_id}}" name="question-{{question_id}}" value="1" class="form-check-input"{% if question.active %} checked{% endif %}>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><label for="question-{{question_id}}" class="form-label">Allow multiple answers</label></span>
+            </div>
+            <div class="form-control">
+              <input type="checkbox" id="question-{{question_id}}-multi" name="multi-{{question_id}}" value="1" class="form-check-input"{% if question.multi %} checked{% endif %}>
+            </div>
+          </div>
+            {% for answer in question.answers %}
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><label for="answer-{{question_id}}-{{answer.id}}" class="form-label">Answer: {{answer.description}}</label></span>
+                </div>
+                <div class="form-control">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="answer-{{question_id}}-{{answer.id}}" id="answer-{{question_id}}-{{answer.id}}_inactive" value="inactive"{% if answer.rank == 'inactive' %} checked{% endif %}>
+                    <label class="form-check-label" for="answer-{{question_id}}-{{answer.id}}_inactive">Exclude for Use Case</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="answer-{{question_id}}-{{answer.id}}" id="answer-{{question_id}}-{{answer.id}}_unranked" value="unranked"{% if answer.rank == 'unranked' %} checked{% endif %}>
+                    <label class="form-check-label" for="answer-{{question_id}}-{{answer.id}}_unranked">Do not rank</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="answer-{{question_id}}-{{answer.id}}" id="answer-{{question_id}}-{{answer.id}}_green" value="green"{% if answer.rank == 'green' %} checked{% endif %}>
+                    <label class="form-check-label" for="answer-{{question_id}}-{{answer.id}}_green">Green</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="answer-{{question_id}}-{{answer.id}}" id="answer-{{question_id}}-{{answer.id}}_yellow" value="yellow"{% if answer.rank == 'yellow' %} checked{% endif %}>
+                    <label class="form-check-label" for="answer-{{question_id}}-{{answer.id}}_yellow">Yellow</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="answer-{{question_id}}-{{answer.id}}" id="answer-{{question_id}}-{{answer.id}}_red" value="red"{% if answer.rank == 'red' %} checked{% endif %}>
+                    <label class="form-check-label" for="answer-{{question_id}}-{{answer.id}}_red">Red</label>
+                  </div>
+              </div>
+            </div>
+            {% endfor %}
+
+        {% endfor %}
+    {% endfor %}
+    <input type="submit" value="Save" class="btn btn-primary"/>
+    
+</form>   
+{% if uid > 0 %}
+<div style="width: 100%; text-align: right">
+<a href="/usecase/delete/{{uid}}" class="card-link"><button class="btn btn-danger" style="margin-top: -4rem;">Delete</button></a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block post_content %}
+<script>
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  });
+</script>
+{% endblock %}

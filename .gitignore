@@ -1,0 +1,9 @@
+/play_around.py
+/.idea/.gitignore
+/.idea/dss_jailbreak.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
+/flask_app/__pycache__

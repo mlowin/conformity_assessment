@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://localhost:5000/evaluation/report -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>transfAIr</title>
+
+    <link href="./transfAIr_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="./transfAIr_files/starter-template.css">	
+    <link rel="stylesheet" href="./transfAIr_files/trafficlight.css">
+    
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1105.0" data-gr-ext-installed="" style="" class="">
+    
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+  <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+    <a href="http://localhost:5000/" class="d-flex align-items-center text-dark text-decoration-none">
+     <img src="./transfAIr_files/digital-icon.png" width="32" style="margin-right: 10px">
+      <span class="fs-4">transfAIr</span>
+    </a>
+  </header>
+
+    <main>
+        
+<h1>Use Case <i>Test Use Case</i> Evaluation Report</h1>
+<div class="accordion" id="accordion-evaluation">
+    
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panels_fairness_heading">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panels_fairness" aria-controls="panels_fairness" aria-expanded="true">
+            Fairness 
+            <div class="traffic_in_title">
+                <div class="trafficlight">
+                    <div class="light" color="red"></div>
+                    <div class="light" color="yellow"></div>
+                    <div class="light green" color="green"></div>
+                </div>
+            </div>
+          </button>
+        </h2>
+        <div id="panels_fairness" class="accordion-collapse collapse show" aria-labelledby="panels_fairness_heading" style="">
+            <div class="accordion-body">
+                <div class="info" data-bs-toggle="modal" data-bs-target="#modal_fairness"> Show definition of <i>Fairness</i></div>
+                <table class="evaluation-item">
+                    
+                    <tbody><tr>
+                        <td>Statistical Parity Difference<div class="info" data-bs-toggle="modal" data-bs-target="#modal_child_stat_par_mean"></div></td>
+                        <td>0.008</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light" color="red"></div>
+                                <div class="light" color="yellow"></div>
+                                <div class="light green" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Average Absolute Odds Difference<div class="info" data-bs-toggle="modal" data-bs-target="#modal_child_eq_odds_mean"></div></td>
+                        <td>0.017</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light" color="red"></div>
+                                <div class="light" color="yellow"></div>
+                                <div class="light green" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </tbody></table>
+            </div>
+        </div>
+      </div>
+    
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panels_explainability_heading">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panels_explainability" aria-controls="panels_explainability" aria-expanded="true">
+            Explainability 
+            <div class="traffic_in_title">
+                <div class="trafficlight">
+                    <div class="light" color="red"></div>
+                    <div class="light yellow" color="yellow"></div>
+                    <div class="light" color="green"></div>
+                </div>
+            </div>
+          </button>
+        </h2>
+        <div id="panels_explainability" class="accordion-collapse collapse show" aria-labelledby="panels_explainability_heading" style="">
+            <div class="accordion-body">
+                <div class="info" data-bs-toggle="modal" data-bs-target="#modal_explainability"> Show definition of <i>Explainability</i></div>
+                <table class="evaluation-item">
+                    
+                    <tbody><tr>
+                        <td>Mean Stability<div class="info" data-bs-toggle="modal" data-bs-target="#modal_child_mean_stability"></div></td>
+                        <td>0.998</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light" color="red"></div>
+                                <div class="light" color="yellow"></div>
+                                <div class="light green" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Dataset</td>
+                        <td>Yes, but the model builds on a different purpose</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light" color="red"></div>
+                                <div class="light yellow" color="yellow"></div>
+                                <div class="light" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </tbody></table>
+            </div>
+        </div>
+      </div>
+    
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panels_performance_heading">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panels_performance" aria-controls="panels_performance" aria-expanded="true">
+            Performance 
+            <div class="traffic_in_title">
+                <div class="trafficlight">
+                    <div class="light red" color="red"></div>
+                    <div class="light" color="yellow"></div>
+                    <div class="light" color="green"></div>
+                </div>
+            </div>
+          </button>
+        </h2>
+        <div id="panels_performance" class="accordion-collapse collapse show" aria-labelledby="panels_performance_heading" style="">
+            <div class="accordion-body">
+                <div class="info" data-bs-toggle="modal" data-bs-target="#modal_performance"> Show definition of <i>Performance</i></div>
+                <table class="evaluation-item">
+                    
+                    <tbody><tr>
+                        <td>Accuracy<div class="info" data-bs-toggle="modal" data-bs-target="#modal_child_accuracy_mean"></div></td>
+                        <td>0.761</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light" color="red"></div>
+                                <div class="light yellow" color="yellow"></div>
+                                <div class="light" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Balanced Accuracy<div class="info" data-bs-toggle="modal" data-bs-target="#modal_child_balanced_acc_mean"></div></td>
+                        <td>0.593</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light" color="red"></div>
+                                <div class="light yellow" color="yellow"></div>
+                                <div class="light" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Precision<div class="info" data-bs-toggle="modal" data-bs-target="#modal_child_precision_mean"></div></td>
+                        <td>0.143</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light red" color="red"></div>
+                                <div class="light" color="yellow"></div>
+                                <div class="light" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Recall<div class="info" data-bs-toggle="modal" data-bs-target="#modal_child_recall_mean"></div></td>
+                        <td>0.392</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light" color="red"></div>
+                                <div class="light yellow" color="yellow"></div>
+                                <div class="light" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>F1-Score<div class="info" data-bs-toggle="modal" data-bs-target="#modal_child_f1_mean"></div></td>
+                        <td>0.209</td>
+                        <td>
+                            <div class="trafficlight">
+                                <div class="light" color="red"></div>
+                                <div class="light yellow" color="yellow"></div>
+                                <div class="light" color="green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </tbody></table>
+            </div>
+        </div>
+      </div>
+     
+</div>
+
+    </main>
+</div>
+
+<script src="./transfAIr_files/bootstrap.bundle.min.js.Download" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="./transfAIr_files/jquery-3.6.4.min.js.Download" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+     
+
+    
+        <div class="modal fade" id="modal_fairness" tabindex="-1" aria-labelledby="modal_fairness_label" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_fairness_label">Fairness</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Does not exist
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_explainability" tabindex="-1" aria-labelledby="modal_explainability_label" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_explainability_label">Explainability</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        What?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_performance" tabindex="-1" aria-labelledby="modal_performance_label" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_performance_label">Performance</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        BWL High Performer
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_child_stat_par_mean" tabindex="-1" aria-labelledby="modal_child_stat_par_mean_label" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_child_stat_par_mean_label">Statistical Parity Difference</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Statistics the different parity
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_child_eq_odds_mean" tabindex="-1" aria-labelledby="modal_child_eq_odds_mean_label" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_child_eq_odds_mean_label">Average Absolute Odds Difference</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        averages the absolute difference of odds
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_child_mean_stability" tabindex="-1" aria-labelledby="modal_child_mean_stability_label" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_child_mean_stability_label">Mean Stability</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_child_accuracy_mean" tabindex="-1" aria-labelledby="modal_child_accuracy_mean_label" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_child_accuracy_mean_label">Accuracy</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Accuracy is how close a given set of measurements (observations or readings) are to their true value.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_child_balanced_acc_mean" tabindex="-1" aria-labelledby="modal_child_balanced_acc_mean_label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_child_balanced_acc_mean_label">Balanced Accuracy</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_child_precision_mean" tabindex="-1" aria-labelledby="modal_child_precision_mean_label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_child_precision_mean_label">Precision</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        In the field of information retrieval, precision is the fraction of retrieved documents that are relevant to the query. For example, for a text search on a set of documents, precision is the number of correct results divided by the number of all returned results.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_child_recall_mean" tabindex="-1" aria-labelledby="modal_child_recall_mean_label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_child_recall_mean_label">Recall</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        In information retrieval, recall is the fraction of the relevant documents that are successfully retrieved. For example, for a text search on a set of documents, recall is the number of correct results divided by the number of results that should have been returned.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal fade" id="modal_child_f1_mean" tabindex="-1" aria-labelledby="modal_child_f1_mean_label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_child_f1_mean_label">F1-Score</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        In statistical analysis of binary classification, the F-score or F-measure is a measure of a test's accuracy. It is calculated from the precision and recall of the test, where the precision is the number of true positive results divided by the number of all positive results, including those not identified correctly, and the recall is the number of true positive results divided by the number of all samples that should have been identified as positive. Precision is also known as positive predictive value, and recall is also known as sensitivity in diagnostic binary classification. The F1 score is the harmonic mean of the precision and recall. It thus symmetrically represents both precision and recall in one metric.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+  
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

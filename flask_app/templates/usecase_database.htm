@@ -1,0 +1,55 @@
+{% extends 'default.htm' %}
+{% block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>Use Case Database</h1>
+    {% for usecase in usecases %}
+        <div class="card left" style="width: 100%; margin-bottom: 15px;">
+            <div class="card-body">
+            <h5 class="card-title">{{usecase.title}}</h5>
+            <p class="card-text">{{usecase.description}}</p>
+            <table style="margin-bottom: 15px">
+                <tr><th>Rating</th><td>
+                    {% for star in range(usecase.rating | int) %}
+                        <span class="fa fa-star checked"></span>
+                    {% endfor %}
+                    {% for star in range((5 - (usecase.rating | int))) %}
+                        <span class="fa fa-star"></span>
+                    {% endfor %}
+                </td></tr>                
+                <tr><th>Assessments</th><td style="text-align: right;">{{usecase.assessments}}</td></tr>
+            </table>
+            <a href="/usecase/copy/{{usecase.id}}" class="card-link"><button class="btn btn-outline-primary">Add Use Case to Repository</button></a>
+            </div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}
+
+{% block post_content %}
+    {% for modal in modals%}
+        <div class="modal fade" id="modal_{{modal.id}}" tabindex="-1" aria-labelledby="modal_{{modal.id}}_label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_{{modal.id}}_label">{{modal.title}}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{modal.text}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

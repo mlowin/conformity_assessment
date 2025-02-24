@@ -1,0 +1,17 @@
+{% extends 'default.htm' %}
+
+
+{% block content %}
+    <h1>Question Catalogue</h1>
+    <table class="table">
+    {% for question in questions %}
+        <tr>
+            <td>{{question.id}}</td>
+            <td>{{question.description}}</td>
+            <td><a href="/question/{{question.id}}">Edit</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <a href="/question/new">Add new question</a>
+    
+{% endblock %}

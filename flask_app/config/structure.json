@@ -1,0 +1,112 @@
+{
+    "fairness": {
+        "title": "Fairness",
+        "default_description": "Help a reviewer getting an idea of the concept of fairness. The default description of fairness is: Fairness in machine learning refers to the various attempts at correcting algorithmic bias in automated decision processes based on machine learning models. Decisions made by computers after a machine-learning process may be considered unfair if they were based on variables considered sensitive.",
+        "children": {
+            "stat_par_mean": {
+                "title": "Statistical Parity Difference",
+                "description": "Statistical parity difference represents the difference in the share of favorable classifications between a subgroup (defined by a sensitive attribute) and the rest of the population.<br>In this case of fraud detection with gender as a sensitive attribute, the statistical parity difference means that the share of transactions from women that are classified as \"valid\" is XXX percentage points higher than that of the rest.",
+                "default_description": "Statistical parity difference, also known as disparate impact or disparate treatment, plays a role in various use cases where fairness and non-discrimination are essential. For instance, credit and lending, healthcare, or employment.",
+                "default_green_min": "0",
+                "default_green_max": "0.2",
+                "default_yellow_min": "0.2",
+                "default_yellow_max": "0.4"
+            },
+            "eq_odds_mean": {
+                "title": "Average Absolute Odds Difference",
+                "description": "Average absolute odds difference represents the average absolute difference in error rates (i.e., in false positive and false negative rate) between a subgroup (defined by a sensitive attribute) and the rest of the population.<br>In this case of fraud detection with gender as a sensitive attribute, the error rates for the classification of transactions from women differ by an average of XXX percentage points when compared to those of the rest.",
+                "default_description": "The Absolute Odds Difference (AOD) is a measure used to evaluate disparities or differences in the odds of an outcome between different groups. Exemplary use cases are healthcare disparities or criminal justice.",
+                "default_green_min": "0",
+                "default_green_max": "0.2",
+                "default_yellow_min": "0.2",
+                "default_yellow_max": "0.4"
+
+            },
+            "eq_opp_mean": {
+                "title": "Equal Opportunity Difference",
+                "description": "Equal opportunity difference represents the difference in the share of favorable classifications that were classified correctly (recall of the favorable class) between a subgroup (defined by a sensitive attribute) and the rest of the population.<br>In this case of fraud detection with gender as a sensitive attribute, the chance of women's valid transactions to be correctly classified is XXX percentage points lower than for those of the rest.",
+                "default_description": "Equal Opportunity Difference (EOD) is a measure used to assess disparities in equal opportunity or equal access to certain outcomes between different groups. Typical use cases are employment, healthcare, and scholarships.",
+                "default_green_min": "0",
+                "default_green_max": "0.05",
+                "default_yellow_min": "0.05",
+                "default_yellow_max": "0.1"
+            }
+        }
+    },
+    "explainability":{
+        "title": "Explainability",
+        "default_description": "Help a reviewer getting an idea of the concept of explainability. The default description of expainability is: xplainable AI (XAI), also known as Interpretable AI, or Explainable Machine Learning (XML), is artificial intelligence (AI) in which humans can understand the reasoning behind decisions or predictions made by the AI. It contrasts with the \"black box\" concept in machine learning, where even the AI's designers cannot explain why it arrived at a specific decision.",
+        "children": {
+            "mean_stability": {
+                "title":"Stability of global explanations",
+                "description": "Stability of global explanations refers to the sensitivity of global explanations towards variations in the training data.<br>A low stability score means that small variations in the training data severly impact the set of features which are reported to be highly important for the ML model.",
+                "requires": [{"question":"model_prediction","answer":"mp_local"}],
+                "default_description": "Stability of global explanations refers to the consistency and robustness of the overall explanations provided by a model across different instances or datasets. It is particularly relevant in use cases where interpretability and trustworthiness of the model's explanations are crucial. For instance, healthcare, legal and justice, or finance and risk.",
+                "default_green_min": "0.8",
+                "default_green_max": "1",
+                "default_yellow_min": "0.2",
+                "default_yellow_max": "0.8"
+            }
+        }
+    },
+    "performance":{
+        "title": "Performance",
+        "default_description": "Help a reviewer getting an idea of the concept of performance.In the context of machine learning, \"performance\" generally refers to the ability of a model to accurately make predictions on new, unseen data. Performance metrics are used to quantitatively evaluate how well a model is performing on a specific task, such as classification or regression. These metrics typically take into account factors such as the number of correct predictions, the number of false positives and false negatives, and the overall accuracy or error rate of the model.",
+        "children": {
+            "accuracy_mean": {
+                "title":"Accuracy",
+                "description": "Accuracy refers to the share of observations (both positive and negative) that were classified correctly.<br>In fraud detection, it refers to the share of transactions that were correctly classified (as either fraudulent or valid).",
+                "default_description": "The performance metric accuracy is relevant in various use cases where the correct classification or prediction of outcomes is important",
+                "default_green_min": "0.8",
+                "default_green_max": "1",
+                "default_yellow_min": "0.6",
+                "default_yellow_max": "0.8"
+            },
+            "balanced_acc_mean": {
+                "title":"Balanced Accuracy",
+                "description": "Balanced Accuracy refers to the average of recall obtained on each class and is an alternative for Accuracy especially for imbalanced datasets.<br>In fraud detection, it refers to the average of the respective shares of fraudulent and valid transactions that were classified correctly.",
+                "default_description": "The balanced accuracy is a performance metric that is particularly relevant in use cases where class imbalance is present in the data. It provides a balanced measure of classification accuracy that accounts for disparities in class distribution. Typical use cases are imbalanced classification tasks such as rare event detection (e.g., fraud detection).",
+                "default_green_min": "0.8",
+                "default_green_max": "1",
+                "default_yellow_min": "0.6",
+                "default_yellow_max": "0.8"
+            },
+            "precision_mean": {
+                "title":"Precision",
+                "description": "Precision refers to the share of positive classifications that are in fact of the positive class, i.e., that were classified correctly.<br>In fraud detection, it refers to the share of classified frauds that actually were fraudulent.",
+                "default_description": "Precision is a performance metric that is relevant in several use cases where the focus is on the accuracy of positive predictions or the minimization of false positives. Typical use cases are fraud detection or medical diagnosis.",
+                "default_green_min": "0.8",
+                "default_green_max": "1",
+                "default_yellow_min": "0.6",
+                "default_yellow_max": "0.8"
+            },
+            "recall_mean": {
+                "title":"Recall",
+                "description": "Recall refers to the share of observations of the positive class that were classified as positive, i.e., that were classified correctly.<br>In fraud detection, it refers to the share of actual fraudulent transactions that were correctly classified as such.",
+                "default_description": "Recall, also known as sensitivity or true positive rate, is a performance metric that measures the ability of a model to correctly identify positive instances from the actual positive instances in the dataset. Recall is particularly relevant in use cases where the focus is on minimizing false negatives or ensuring high coverage of positive case, e.g., for quality control or medical diagnosis.",
+                "default_green_min": "0.8",
+                "default_green_max": "1",
+                "default_yellow_min": "0.6",
+                "default_yellow_max": "0.8"
+            },
+            "f1_mean": {
+                "title":"F1-Score",
+                "description": "The F-score refers to the harmonic mean of precision and recall and, thus, it is robust to class imbalances by symmetrically representing both precision and recall.<br>In fraud detection, it represents both the share of classified frauds that were correct and the share of actual frauds that were classified correctly.",
+                "default_description": "The F1 score is a performance metric that combines precision and recall into a single measure. It is particularly relevant in use cases where achieving a balance between precision and recall is important.",
+                "default_green_min": "0.8",
+                "default_green_max": "1",
+                "default_yellow_min": "0.4",
+                "default_yellow_max": "0.8"
+            },
+            "data_drift": {
+                "title": "Data Drift",
+                "description": "Data Drift refers to the phenomenon where properties of the data used to train a model and data used in production change over time. <br> In fraud detection, data drift is a typical problem: Over time, fraudsters understand how AI-based fraud detection systems work and, as a reaction, change their fraudulent behavior. This would necessitate retraining of the AI systems.",
+                "default_description": "Data drift is relevant in various use cases where the distribution or properties of the input data change over time. It helps identify and monitor changes in the data characteristics, which can impact the performance and reliability of machine learning models.",
+                "default_green_min": "0",
+                "default_green_max": "0.05",
+                "default_yellow_min": "0.05",
+                "default_yellow_max": "0.2"
+            }
+        }
+    }
+}

@@ -1,0 +1,265 @@
+{% extends 'default.htm' %}
+
+
+{% block content %}
+<style>
+    .modebar{
+      display: none !important;
+    }
+    .arrow_down{
+        flex-shrink: 0;
+        width: 1.25rem;
+        height: 1rem;
+        display: inline-block;
+        content: "";
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-size: 1.25rem;
+        transition: transform .2s ease-in-out;
+    }
+    .arrow_up{
+        transform: rotate(-180deg);
+    }
+    .sub_item{
+        display: none;
+    }
+    .sub_background{
+        background: rgb(231, 241, 255);
+    }
+    .margin_bottom{        
+        margin-bottom: 5px;
+        border-bottom: 5px solid #fff;
+    }
+    .pointer{
+        cursor: pointer;
+    }
+    .bold{
+        font-weight: bold;
+    }
+    svg{
+        background: transparent !important;
+    }
+</style>
+<h1>Use Case <i>{{title}}</i> Evaluation Report</h1>
+<div id="ranger">
+    <label for="customRange3" class="form-label">Classification Treshold: <span id="thresh">0.5</span></label>
+    <input type="range" class="form-range" min="0.01" max="0.99" step="0.01" id="thresh_range">
+    <div id="extra" style="display: none">
+        Dataset: Fraud_Germany_2023.csv<br/>
+        Outcome: TARGET<br/>
+        Sensitive Attribute: CODE_GENDER_M<br/>
+        Model: Fraud_Classifier_XGBoost<br/>
+        Date: {{date}} <br/>
+    </div>
+</div>
+<div class="accordion" id="accordion-evaluation">
+    {% for item_id, item in items.items() %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panels_{{item_id}}_heading">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+          data-bs-target="#panels_{{item_id}}"
+          aria-controls="panels_{{item_id}}" aria-expanded="false">
+            {{item.title}} 
+            <div class="traffic_in_title">
+                <div class="trafficlight" data-bs-toggle="tooltip" data-bs-placement="right" title="Decision Rule: The traffic light color results from the lowest rated metric of the sub-properties">
+                    <div class="light{% if item.color == 'red' %} red{% endif %}" color = "red"></div>
+                    <div class="light{% if item.color == 'yellow' %} yellow{% endif %}" color = "yellow"></div>
+                    <div class="light{% if item.color == 'green' %} green{% endif %}" color = "green"></div>
+                </div>
+            </div>
+          </button>
+        </h2>
+        <div id="panels_{{item_id}}" class="accordion-collapse collapse" aria-labelledby="panels_{{item_id}}_heading">
+            <div class="accordion-body">
+                <div class="info"  data-bs-toggle="modal" data-bs-target="#modal_{{item_id}}"> Show definition of <i>{{item.title}}</i></div>
+                <table class="evaluation-item">
+                    {% for child_id, child in item.children.items() %}
+                    <tr{% if child.value == 'question' %} class="question_category_{{child.css_category}}"{% endif %}>
+                        <td>
+                            {{child.title}}
+                            {% if child['description'] != "None" and child.description|length > 3 %}
+                                <div class="info"  onclick="toggleDescription(this)"></div>
+                                <div class="description">{{child['description']|safe}}</div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if child.value == 'question'%}
+                                <span class="child-value pointer" onclick="show_individual(this, '{{child.css_category}}')">Show individual questions <div class="arrow_down"> </div></span> 
+                            {% else %}
+                                <span class="child-value">{{child.value|safe}}</span> 
+                                {% if item_id+'_'+child_id in plots %}
+                                    <i class="history" onclick="toggle_history(this)"> </i>
+                                    <div id="chart-{{item_id}}_{{child_id}}" class="plt-chart"></div>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="trafficlight"  data-bs-toggle="tooltip" data-bs-placement="right" title="{{child.tooltip}}">
+                                <div class="light{% if child.color == 'red' %} red{% endif %}" color = "red"></div>
+                                <div class="light{% if child.color == 'yellow' %} yellow{% endif %}" color = "yellow"></div>
+                                <div class="light{% if child.color == 'green' %} green{% endif %}" color = "green"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% if child.value == 'question' %}
+                        {% for q_child_id, q_child in child.children.items() %}
+                        <tr class="question_category_{{q_child.css_category}} sub_item">
+                            <td>
+                                {{q_child.title}}
+                                {% if q_child['description'] != "None" and q_child.description|length > 3 %}
+                                    <div class="info"  onclick="toggleDescription(this)"></div>
+                                    <div class="description">{{q_child['description']|safe}}</div>
+                                {% endif %}
+                            </td>
+                            <td>                                
+                                <span class="child-value">{{q_child.value|safe}}</span> 
+                                {% if item_id+'_'+q_child_id in plots %}
+                                    <i class="history" onclick="toggle_history(this)"> </i>
+                                    <div id="chart-{{item_id}}_{{q_child_id}}" class="plt-chart"></div>
+                                {% endif %}                                    
+                            </td>
+                            <td>
+                                <div class="trafficlight"  data-bs-toggle="tooltip" data-bs-placement="right" title="{{q_child.tooltip}}">
+                                    <div class="light{% if q_child.color == 'red' %} red{% endif %}" color = "red"></div>
+                                    <div class="light{% if q_child.color == 'yellow' %} yellow{% endif %}" color = "yellow"></div>
+                                    <div class="light{% if q_child.color == 'green' %} green{% endif %}" color = "green"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+      </div>
+    {% endfor %} 
+    <br/>
+    <input type="button" class="btn btn-secondary" value="Save as PDF" id="btnPrint" />
+</div>
+{% endblock %}
+
+{% block post_content %}
+    {% for modal in modals%}
+        <div class="modal fade" id="modal_{{modal.id}}" tabindex="-1" aria-labelledby="modal_{{modal.id}}_label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_{{modal.id}}_label">{{modal.title}}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{modal.text}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <script type="text/javascript">
+        var originalHeight = null;
+        function toggleDescription(e){
+            let elem = $(e).next();
+
+            if(elem.hasClass('expanded')){
+                elem.animate({height:0},200);
+                elem.removeClass('expanded');
+            }
+            else{
+                elem.show();
+                if(originalHeight === null){
+                    originalHeight = elem.height();
+                }
+                elem.css('height','0px');
+                elem.animate({height:originalHeight},200);
+                elem.addClass('expanded');
+            }
+        }
+
+        function show_individual(e, css){
+            console.log("o",css);
+            $('.sub_item.question_category_'+css).toggle();
+            $('.question_category_'+css).toggleClass('sub_background');
+            $('.question_category_'+css).last().toggleClass('margin_bottom');
+            $(e).find('div').toggleClass('arrow_up');
+            $(e).parent().parent().find('td:first-child').toggleClass('bold');
+            let text = $(e).html();
+            text = text.toString().includes('Show') ? text.replace('Show', 'Hide') : text.replace('Hide','Show');
+            $(e).html(text);
+        }
+    </script>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script type='text/javascript'>
+        var graphs, layout;
+        var all_metrics = {{all_metrics|safe}};
+        var all_thresholds = {{all_thresholds|safe}};
+        
+        {% for graph_id, graphJSON in plots.items() %}
+            var graphs_{{graph_id}} = {{graphJSON | safe}};
+            var layout_{{graph_id}} = {showlegend: false};
+            Plotly.plot('chart-{{graph_id}}',graphs_{{graph_id}},{});
+        {% endfor %}
+
+        function toggle_history(e){
+            $(e).next().toggle();
+            $(e).prev().toggle();
+        }
+
+        function get_color(value, rules){
+            if((value >= rules['default_green_min']) && (value <= rules['default_green_max']))
+                return 'green'
+            if((value >= rules['default_yellow_min']) && (value <= rules['default_yellow_max']))
+                return 'yellow'
+            return 'red'
+        }
+
+        $('#thresh_range').change(function(e){
+            let thresh = $(this).val();
+            get_i = parseInt(thresh*100)-1;
+            $('#thresh').text(thresh);
+            cats = {'fairness':0,'performance':1};
+            for(cat in cats){
+                cat_color = 'green';
+                counter = 0;
+                for(i in all_thresholds[cat]['children']){
+                    value = all_metrics[cat][i][get_i];
+                    color = get_color(value, all_thresholds[cat]['children'][i])
+                    if(color != 'green' && cat_color != 'red'){
+                        if(color == 'yellow'){
+                            cat_color = 'yellow';
+                        }
+                        if(color == 'red'){
+                            cat_color = 'red';
+                        }
+                    }
+                    $($('#panels_'+cat+' .child-value')[counter]).text(Math.round(value*1000)/1000);
+                    $($('#panels_'+cat+' .trafficlight')[counter]).find('.light').removeClass('red');
+                    $($('#panels_'+cat+' .trafficlight')[counter]).find('.light').removeClass('yellow');
+                    $($('#panels_'+cat+' .trafficlight')[counter]).find('.light').removeClass('green');
+                    $($('#panels_'+cat+' .trafficlight')[counter]).find('.light[color="'+color+'"]').addClass(color);
+                    counter += 1;
+                    console.log(i,value,color, cat_color);
+                }
+                $('#panels_'+cat+'_heading .light').removeClass('red');
+                $('#panels_'+cat+'_heading .light').removeClass('yellow');
+                $('#panels_'+cat+'_heading .light').removeClass('green');
+                $('#panels_'+cat+'_heading .light[color="'+cat_color+'"]').addClass(cat_color);    
+            }        
+        });
+
+        $("#btnPrint").click(function () {
+            var divContents = $("body").html();
+            $(divContents).find('#ranger').append('XAXAXAXAXA');
+            var printWindow = window.open('', '', 'height=400,width=800');
+            printWindow.document.write('<html><head><title>Print</title><link rel="stylesheet" href="/css/print.css"/><link rel="stylesheet" href="/css/starter-template.css" /><link rel="stylesheet" href="/css/trafficlight.css" />');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write($(divContents).html());
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        });
+    </script>
+</head>
+{% endblock %}

@@ -1,0 +1,18 @@
+body{
+    font-family: sans-serif;
+}
+button{
+    background: white;
+    border: white;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.info, .description, #btnPrint, .modal, .child-value.pointer{
+    display: none !important;
+}
+.sub_item,#extra{
+    display: block !important;
+}
+.accordion-header{
+    position: relative;
+}

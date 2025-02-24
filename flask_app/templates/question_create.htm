@@ -1,0 +1,74 @@
+{% extends 'default.htm' %}
+
+
+{% block content %}
+    <h1>New Question</h1>
+    <form method="post" action="/question">
+        <input type="hidden" name="old_id" value="{{old_id}}"/>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">Question Identifier</span>
+            </div>
+            <input type="text" class="form-control" name="id" value="{{id}}" placeholder="Question Identifier" required>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">Category</span>
+            </div>
+            <input type="text" class="form-control" name="category" value="{{category}}" placeholder="Category" required>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">Description</span>
+            </div>
+            <textarea class="form-control" name="description">{{description}}</textarea>
+        </div>
+        <div id="answers">
+            {% for answer in answers %}
+            <div class="answer">
+                <h4>Answer <span onclick="remove(this)">[X]</span></h4>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">Answer Identifier</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{answer.id}}" name="answer_id[]" placeholder="Answer Identifier" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">Answer Description</span>
+                    </div>
+                    <textarea class="form-control" name="answer[]">{{answer.description}}</textarea>
+                </div>
+            </div>
+            {% endfor %}
+        </div><br/><br/>
+        <input type="button" class="btn btn-secondary" value="Add Answer" onclick="add_answer()"/>
+        <input type="submit" class="btn btn-primary" value="Save" />
+    </form>
+    
+    
+{% endblock %}
+
+{% block post_content %}
+<script>
+    function add_answer(){
+        answers = $('.answer').length+1;
+        html = '<div class="answer"><h4>Answer #'+answers+' <span onclick="remove(this)">[X]</span></h4>'
+            +'<div class="input-group mb-3">'
+            +'<div class="input-group-prepend">'
+            +'<span class="input-group-text">Answer Identifier</span>'
+            +'</div>'
+            +'<input type="text" class="form-control" name="answer_id[]" placeholder="Answer Identifier" required>'
+            +'</div>'
+            +'<div class="input-group mb-3">'
+            +'<div class="input-group-prepend">'
+            +'<span class="input-group-text">Answer Description</span>'
+            +'</div>'
+            +'<textarea class="form-control" name="answer[]"></textarea></div>';
+        $('#answers').append(html);
+    }
+    function remove(e){
+        $(e).parent().parent().remove();
+    }
+</script>
+{% endblock %}

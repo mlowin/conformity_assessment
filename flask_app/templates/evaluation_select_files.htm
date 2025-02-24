@@ -1,0 +1,80 @@
+{% extends 'default.htm' %}
+
+{% block header %}
+<style>
+    h4{
+        margin-top: 20px;
+    }
+    input[type="submit"]{
+        margin-top: 40px;
+    }
+    #waiting{
+        background: url(/img/waiting.gif);
+        background-size: contain;
+        margin-top: 20px;
+        height: 100px;
+        width: 100px;
+        display: none;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<h1>Evaluate Use Case</h1>
+<form method="post" action="/evaluation/questions/{{id}}">
+    <input type="hidden" name="usecase" value="{{id}}" />
+    <h4><label for="dataset">Select dataset file</label></h4>
+    <select class="form-select" aria-label="Select dataset file" id="dataset" name="dataset">
+        <option selected disabled>Select file</option>
+        {% for file in files_dataset %}
+            <option{% if file['disabled'] %} disabled{% else %} selected{% endif %}>{{file['filename']}}</option>
+        {% endfor %}
+    </select>
+    <h4>Select model file</h4>
+    <select class="form-select" aria-label="Select model file" id="model" name="model">
+        <option selected disabled>Select file</option>
+        {% for file in files_model %}
+        <option{% if file['disabled'] %} disabled{% else %} selected{% endif %}>{{file['filename']}}</option>
+        {% endfor %}
+    </select>
+    <div id="waiting"></div>
+    <div id="columns" style="">
+        <h4><label for="outcome">Outcome Column</label></h4>
+        <select class="form-select" aria-label="Select column" id="outcome" name="outcome"><option>SK_ID_CURR</option><option selected="">TARGET</option><option>CNT_CHILDREN</option><option>AMT_INCOME_TOTAL</option><option>AMT_CREDIT</option><option>AMT_ANNUITY</option><option>AMT_GOODS_PRICE</option><option>REGION_POPULATION_RELATIVE</option><option>DAYS_BIRTH</option><option>DAYS_EMPLOYED</option><option>DAYS_REGISTRATION</option><option>DAYS_ID_PUBLISH</option><option>OWN_CAR_AGE</option><option>FLAG_MOBIL</option><option>FLAG_EMP_PHONE</option><option>FLAG_WORK_PHONE</option><option>FLAG_CONT_MOBILE</option><option>FLAG_PHONE</option><option>FLAG_EMAIL</option><option>CNT_FAM_MEMBERS</option><option>REGION_RATING_CLIENT</option><option>REGION_RATING_CLIENT_W_CITY</option><option>HOUR_APPR_PROCESS_START</option><option>REG_REGION_NOT_LIVE_REGION</option><option>REG_REGION_NOT_WORK_REGION</option><option>LIVE_REGION_NOT_WORK_REGION</option><option>REG_CITY_NOT_LIVE_CITY</option><option>REG_CITY_NOT_WORK_CITY</option><option>LIVE_CITY_NOT_WORK_CITY</option><option>EXT_SOURCE_1</option><option>EXT_SOURCE_2</option><option>EXT_SOURCE_3</option><option>APARTMENTS_AVG</option><option>BASEMENTAREA_AVG</option><option>YEARS_BEGINEXPLUATATION_AVG</option><option>YEARS_BUILD_AVG</option><option>COMMONAREA_AVG</option><option>ELEVATORS_AVG</option><option>ENTRANCES_AVG</option><option>FLOORSMAX_AVG</option><option>FLOORSMIN_AVG</option><option>LANDAREA_AVG</option><option>LIVINGAPARTMENTS_AVG</option><option>LIVINGAREA_AVG</option><option>NONLIVINGAPARTMENTS_AVG</option><option>NONLIVINGAREA_AVG</option><option>APARTMENTS_MODE</option><option>BASEMENTAREA_MODE</option><option>YEARS_BEGINEXPLUATATION_MODE</option><option>YEARS_BUILD_MODE</option><option>COMMONAREA_MODE</option><option>ELEVATORS_MODE</option><option>ENTRANCES_MODE</option><option>FLOORSMAX_MODE</option><option>FLOORSMIN_MODE</option><option>LANDAREA_MODE</option><option>LIVINGAPARTMENTS_MODE</option><option>LIVINGAREA_MODE</option><option>NONLIVINGAPARTMENTS_MODE</option><option>NONLIVINGAREA_MODE</option><option>APARTMENTS_MEDI</option><option>BASEMENTAREA_MEDI</option><option>YEARS_BEGINEXPLUATATION_MEDI</option><option>YEARS_BUILD_MEDI</option><option>COMMONAREA_MEDI</option><option>ELEVATORS_MEDI</option><option>ENTRANCES_MEDI</option><option>FLOORSMAX_MEDI</option><option>FLOORSMIN_MEDI</option><option>LANDAREA_MEDI</option><option>LIVINGAPARTMENTS_MEDI</option><option>LIVINGAREA_MEDI</option><option>NONLIVINGAPARTMENTS_MEDI</option><option>NONLIVINGAREA_MEDI</option><option>TOTALAREA_MODE</option><option>OBS_30_CNT_SOCIAL_CIRCLE</option><option>DEF_30_CNT_SOCIAL_CIRCLE</option><option>OBS_60_CNT_SOCIAL_CIRCLE</option><option>DEF_60_CNT_SOCIAL_CIRCLE</option><option>DAYS_LAST_PHONE_CHANGE</option><option>FLAG_DOCUMENT_2</option><option>FLAG_DOCUMENT_3</option><option>FLAG_DOCUMENT_4</option><option>FLAG_DOCUMENT_5</option><option>FLAG_DOCUMENT_6</option><option>FLAG_DOCUMENT_7</option><option>FLAG_DOCUMENT_8</option><option>FLAG_DOCUMENT_9</option><option>FLAG_DOCUMENT_10</option><option>FLAG_DOCUMENT_11</option><option>FLAG_DOCUMENT_12</option><option>FLAG_DOCUMENT_13</option><option>FLAG_DOCUMENT_14</option><option>FLAG_DOCUMENT_15</option><option>FLAG_DOCUMENT_16</option><option>FLAG_DOCUMENT_17</option><option>FLAG_DOCUMENT_18</option><option>FLAG_DOCUMENT_19</option><option>FLAG_DOCUMENT_20</option><option>FLAG_DOCUMENT_21</option><option>AMT_REQ_CREDIT_BUREAU_HOUR</option><option>AMT_REQ_CREDIT_BUREAU_DAY</option><option>AMT_REQ_CREDIT_BUREAU_WEEK</option><option>AMT_REQ_CREDIT_BUREAU_MON</option><option>AMT_REQ_CREDIT_BUREAU_QRT</option><option>AMT_REQ_CREDIT_BUREAU_YEAR</option><option>NAME_CONTRACT_TYPE_Revolving loans</option><option>CODE_GENDER_M</option><option>CODE_GENDER_XNA</option><option>FLAG_OWN_CAR_Y</option><option>FLAG_OWN_REALTY_Y</option><option>NAME_TYPE_SUITE_Children</option><option>NAME_TYPE_SUITE_Family</option><option>NAME_TYPE_SUITE_Group of people</option><option>NAME_TYPE_SUITE_Other_A</option><option>NAME_TYPE_SUITE_Other_B</option><option>NAME_TYPE_SUITE_Spouse, partner</option><option>NAME_TYPE_SUITE_Unaccompanied</option><option>NAME_INCOME_TYPE_Commercial associate</option><option>NAME_INCOME_TYPE_Maternity leave</option><option>NAME_INCOME_TYPE_Pensioner</option><option>NAME_INCOME_TYPE_State servant</option><option>NAME_INCOME_TYPE_Student</option><option>NAME_INCOME_TYPE_Unemployed</option><option>NAME_INCOME_TYPE_Working</option><option>NAME_EDUCATION_TYPE_Higher education</option><option>NAME_EDUCATION_TYPE_Incomplete higher</option><option>NAME_EDUCATION_TYPE_Lower secondary</option><option>NAME_EDUCATION_TYPE_Secondary / secondary special</option><option>NAME_FAMILY_STATUS_Married</option><option>NAME_FAMILY_STATUS_Separated</option><option>NAME_FAMILY_STATUS_Single / not married</option><option>NAME_FAMILY_STATUS_Unknown</option><option>NAME_FAMILY_STATUS_Widow</option><option>NAME_HOUSING_TYPE_House / apartment</option><option>NAME_HOUSING_TYPE_Municipal apartment</option><option>NAME_HOUSING_TYPE_Office apartment</option><option>NAME_HOUSING_TYPE_Rented apartment</option><option>NAME_HOUSING_TYPE_With parents</option><option>WEEKDAY_APPR_PROCESS_START_MONDAY</option><option>WEEKDAY_APPR_PROCESS_START_SATURDAY</option><option>WEEKDAY_APPR_PROCESS_START_SUNDAY</option><option>WEEKDAY_APPR_PROCESS_START_THURSDAY</option><option>WEEKDAY_APPR_PROCESS_START_TUESDAY</option><option>WEEKDAY_APPR_PROCESS_START_WEDNESDAY</option><option>FONDKAPREMONT_MODE_not specified</option><option>FONDKAPREMONT_MODE_org spec account</option><option>FONDKAPREMONT_MODE_reg oper account</option><option>FONDKAPREMONT_MODE_reg oper spec account</option><option>HOUSETYPE_MODE_block of flats</option><option>HOUSETYPE_MODE_specific housing</option><option>HOUSETYPE_MODE_terraced house</option><option>WALLSMATERIAL_MODE_Block</option><option>WALLSMATERIAL_MODE_Mixed</option><option>WALLSMATERIAL_MODE_Monolithic</option><option>WALLSMATERIAL_MODE_Others</option><option>WALLSMATERIAL_MODE_Panel</option><option>WALLSMATERIAL_MODE_Stone, brick</option><option>WALLSMATERIAL_MODE_Wooden</option><option>EMERGENCYSTATE_MODE_No</option><option>EMERGENCYSTATE_MODE_Yes</option></select>
+
+        <h4><label for="sensitive">Sensitive Attribute</label></h4>
+        <select class="form-select" aria-label="Select column" id="sensitive" name="sensitive"><option>SK_ID_CURR</option><option>TARGET</option><option>CNT_CHILDREN</option><option>AMT_INCOME_TOTAL</option><option>AMT_CREDIT</option><option>AMT_ANNUITY</option><option>AMT_GOODS_PRICE</option><option>REGION_POPULATION_RELATIVE</option><option>DAYS_BIRTH</option><option>DAYS_EMPLOYED</option><option>DAYS_REGISTRATION</option><option>DAYS_ID_PUBLISH</option><option>OWN_CAR_AGE</option><option>FLAG_MOBIL</option><option>FLAG_EMP_PHONE</option><option>FLAG_WORK_PHONE</option><option>FLAG_CONT_MOBILE</option><option>FLAG_PHONE</option><option>FLAG_EMAIL</option><option>CNT_FAM_MEMBERS</option><option>REGION_RATING_CLIENT</option><option>REGION_RATING_CLIENT_W_CITY</option><option>HOUR_APPR_PROCESS_START</option><option>REG_REGION_NOT_LIVE_REGION</option><option>REG_REGION_NOT_WORK_REGION</option><option>LIVE_REGION_NOT_WORK_REGION</option><option>REG_CITY_NOT_LIVE_CITY</option><option>REG_CITY_NOT_WORK_CITY</option><option>LIVE_CITY_NOT_WORK_CITY</option><option>EXT_SOURCE_1</option><option>EXT_SOURCE_2</option><option>EXT_SOURCE_3</option><option>APARTMENTS_AVG</option><option>BASEMENTAREA_AVG</option><option>YEARS_BEGINEXPLUATATION_AVG</option><option>YEARS_BUILD_AVG</option><option>COMMONAREA_AVG</option><option>ELEVATORS_AVG</option><option>ENTRANCES_AVG</option><option>FLOORSMAX_AVG</option><option>FLOORSMIN_AVG</option><option>LANDAREA_AVG</option><option>LIVINGAPARTMENTS_AVG</option><option>LIVINGAREA_AVG</option><option>NONLIVINGAPARTMENTS_AVG</option><option>NONLIVINGAREA_AVG</option><option>APARTMENTS_MODE</option><option>BASEMENTAREA_MODE</option><option>YEARS_BEGINEXPLUATATION_MODE</option><option>YEARS_BUILD_MODE</option><option>COMMONAREA_MODE</option><option>ELEVATORS_MODE</option><option>ENTRANCES_MODE</option><option>FLOORSMAX_MODE</option><option>FLOORSMIN_MODE</option><option>LANDAREA_MODE</option><option>LIVINGAPARTMENTS_MODE</option><option>LIVINGAREA_MODE</option><option>NONLIVINGAPARTMENTS_MODE</option><option>NONLIVINGAREA_MODE</option><option>APARTMENTS_MEDI</option><option>BASEMENTAREA_MEDI</option><option>YEARS_BEGINEXPLUATATION_MEDI</option><option>YEARS_BUILD_MEDI</option><option>COMMONAREA_MEDI</option><option>ELEVATORS_MEDI</option><option>ENTRANCES_MEDI</option><option>FLOORSMAX_MEDI</option><option>FLOORSMIN_MEDI</option><option>LANDAREA_MEDI</option><option>LIVINGAPARTMENTS_MEDI</option><option>LIVINGAREA_MEDI</option><option>NONLIVINGAPARTMENTS_MEDI</option><option>NONLIVINGAREA_MEDI</option><option>TOTALAREA_MODE</option><option>OBS_30_CNT_SOCIAL_CIRCLE</option><option>DEF_30_CNT_SOCIAL_CIRCLE</option><option>OBS_60_CNT_SOCIAL_CIRCLE</option><option>DEF_60_CNT_SOCIAL_CIRCLE</option><option>DAYS_LAST_PHONE_CHANGE</option><option>FLAG_DOCUMENT_2</option><option>FLAG_DOCUMENT_3</option><option>FLAG_DOCUMENT_4</option><option>FLAG_DOCUMENT_5</option><option>FLAG_DOCUMENT_6</option><option>FLAG_DOCUMENT_7</option><option>FLAG_DOCUMENT_8</option><option>FLAG_DOCUMENT_9</option><option>FLAG_DOCUMENT_10</option><option>FLAG_DOCUMENT_11</option><option>FLAG_DOCUMENT_12</option><option>FLAG_DOCUMENT_13</option><option>FLAG_DOCUMENT_14</option><option>FLAG_DOCUMENT_15</option><option>FLAG_DOCUMENT_16</option><option>FLAG_DOCUMENT_17</option><option>FLAG_DOCUMENT_18</option><option>FLAG_DOCUMENT_19</option><option>FLAG_DOCUMENT_20</option><option>FLAG_DOCUMENT_21</option><option>AMT_REQ_CREDIT_BUREAU_HOUR</option><option>AMT_REQ_CREDIT_BUREAU_DAY</option><option>AMT_REQ_CREDIT_BUREAU_WEEK</option><option>AMT_REQ_CREDIT_BUREAU_MON</option><option>AMT_REQ_CREDIT_BUREAU_QRT</option><option>AMT_REQ_CREDIT_BUREAU_YEAR</option><option>NAME_CONTRACT_TYPE_Revolving loans</option><option selected="">CODE_GENDER_M</option><option>CODE_GENDER_XNA</option><option>FLAG_OWN_CAR_Y</option><option>FLAG_OWN_REALTY_Y</option><option>NAME_TYPE_SUITE_Children</option><option>NAME_TYPE_SUITE_Family</option><option>NAME_TYPE_SUITE_Group of people</option><option>NAME_TYPE_SUITE_Other_A</option><option>NAME_TYPE_SUITE_Other_B</option><option>NAME_TYPE_SUITE_Spouse, partner</option><option>NAME_TYPE_SUITE_Unaccompanied</option><option>NAME_INCOME_TYPE_Commercial associate</option><option>NAME_INCOME_TYPE_Maternity leave</option><option>NAME_INCOME_TYPE_Pensioner</option><option>NAME_INCOME_TYPE_State servant</option><option>NAME_INCOME_TYPE_Student</option><option>NAME_INCOME_TYPE_Unemployed</option><option>NAME_INCOME_TYPE_Working</option><option>NAME_EDUCATION_TYPE_Higher education</option><option>NAME_EDUCATION_TYPE_Incomplete higher</option><option>NAME_EDUCATION_TYPE_Lower secondary</option><option>NAME_EDUCATION_TYPE_Secondary / secondary special</option><option>NAME_FAMILY_STATUS_Married</option><option>NAME_FAMILY_STATUS_Separated</option><option>NAME_FAMILY_STATUS_Single / not married</option><option>NAME_FAMILY_STATUS_Unknown</option><option>NAME_FAMILY_STATUS_Widow</option><option>NAME_HOUSING_TYPE_House / apartment</option><option>NAME_HOUSING_TYPE_Municipal apartment</option><option>NAME_HOUSING_TYPE_Office apartment</option><option>NAME_HOUSING_TYPE_Rented apartment</option><option>NAME_HOUSING_TYPE_With parents</option><option>WEEKDAY_APPR_PROCESS_START_MONDAY</option><option>WEEKDAY_APPR_PROCESS_START_SATURDAY</option><option>WEEKDAY_APPR_PROCESS_START_SUNDAY</option><option>WEEKDAY_APPR_PROCESS_START_THURSDAY</option><option>WEEKDAY_APPR_PROCESS_START_TUESDAY</option><option>WEEKDAY_APPR_PROCESS_START_WEDNESDAY</option><option>FONDKAPREMONT_MODE_not specified</option><option>FONDKAPREMONT_MODE_org spec account</option><option>FONDKAPREMONT_MODE_reg oper account</option><option>FONDKAPREMONT_MODE_reg oper spec account</option><option>HOUSETYPE_MODE_block of flats</option><option>HOUSETYPE_MODE_specific housing</option><option>HOUSETYPE_MODE_terraced house</option><option>WALLSMATERIAL_MODE_Block</option><option>WALLSMATERIAL_MODE_Mixed</option><option>WALLSMATERIAL_MODE_Monolithic</option><option>WALLSMATERIAL_MODE_Others</option><option>WALLSMATERIAL_MODE_Panel</option><option>WALLSMATERIAL_MODE_Stone, brick</option><option>WALLSMATERIAL_MODE_Wooden</option><option>EMERGENCYSTATE_MODE_No</option><option>EMERGENCYSTATE_MODE_Yes</option></select>
+        
+        <input type="submit" value="Next" class="btn btn-primary">
+    </div>
+</form>
+
+{% endblock %}
+
+{% block post_content %}
+    <script>
+        $('#dataset').on('change', function(e){
+            $.post({
+                'url': '/get_columns',
+                'data': {
+                    'file': this.value
+                },
+                'dataType':'json',
+                'success': function(data){
+                    col_html_outcome = "";
+                    col_html_sensitive = "";
+                    for(let i in data){
+                        col_html_outcome += '<option'+(data[i] == 'TARGET' ? ' selected': '')+'>'+data[i]+'</option>'
+                        col_html_sensitive += '<option'+(data[i] == 'CODE_GENDER_M' ? ' selected': '')+'>'+data[i]+'</option>'
+                    }
+                    $('#outcome').html(col_html_outcome);
+                    //$('#prediction').html(col_html);
+                    $('#sensitive').html(col_html_sensitive);
+                    $('#columns').show();
+                    $('#waiting').hide()
+                }
+            });
+            $('#waiting').show()
+        });
+    </script>    
+
+{% endblock %}

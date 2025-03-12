@@ -3,12 +3,13 @@
 This repository contains an implementation for (semi-)automated assessments of artificial intelligence (AI) conformity.
 
 # Installation 
-The implementation is dependent on several other packages for handling data, modeling, and generating reports: pandas, ...
+The implementation dependends on several other packages for handling data, modeling, and generating reports.
 To install the required packages, run the following:
 ```
 pip install -r requirements.txt
  ```
 
+Besides, the tool needs a running MySQL (compatible) database. Please import the SQL dump from the file conformity_assessment.sql into your SQL database and add the database credentials into flask_app/server.py (lines 12 and following, e.g., db_username, db_password, ...).
 # Usage
 
 Conformity assessments can be run on the exemplary use case of fraud detection:

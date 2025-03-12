@@ -4,21 +4,23 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 import sys
 import numpy as np
-sys.path.append("..")
-#import flask_app.compute_metrics as compute_metrics
+import compute_metrics
 
-import getpass
-username = getpass.getuser()
-passwords = {
-    'Maximilian Lowin': '',
-    'ubuntu': 'DSS%40j4ilbr4€k', #DSS@j4ilbr4€k
-    'maxim': ''
-}
-# create the extension
+sys.path.append("..")
+
+# Please change database credentials here
+db_username = "your_username"
+db_password = "password"
+db_database = "conformity_assessment"
+db_host = "localhost"
+db_port = "3306"
+
+# remaining code
+
 db = SQLAlchemy()
 #gunicorn -w 4 -b 0.0.0.0 'server:app'
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:"+passwords[username]+"@localhost:3306/dss_jailbreak"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://"+str(db_username)+":"+str(db_password)+"@"+str(db_host)+":"+str(db_port)+"/"+str(db_database)
 db.init_app(app)
 
 class Usecase(db.Model):
@@ -163,7 +165,6 @@ def generate_structure(data):
                 structure[item_key]['children'][sub_key]['rules'] = rules
     # structure based on questions
     questions = {}
-    print("genz")
     
     for item_q in data:
         if item_q[:8] == 'question':
@@ -257,28 +258,14 @@ def evaluation_report():
     #load dataframe and 
     import pandas as pd
     
-    import pickle
-
-    read_cache = True
-
-    if read_cache:
-        file = open('metrics.pickle', 'rb')
-        metrics = pickle.load(file)
-        file.close()
-    # else:
-    #     # df = pd.read_csv('../datasets/'+data['dataset'])
-    #     # outcome_col = data['outcome']
-    #     # sensitive_attr = data['sensitive']
-    #     # model_path = '../models/' + data['model']
-    #     # metrics = compute_metrics.compute_metrics(Data=df, model_name=model_path,
-    #     #                                         column=outcome_col, sensitive_attr=sensitive_attr)
-    #     file = open('metrics.pickle', 'wb')
-    #     pickle.dump(metrics, file)
-    #     file.close()
-    #     file = open('metrics.pickle', 'wb')
-    #     pickle.dump(metrics, file)
-    #     file.close()
-        
+  
+    df = pd.read_csv('../datasets/'+data['dataset'])
+    outcome_col = data['outcome']
+    sensitive_attr = data['sensitive']
+    model_path = '../models/' + data['model']
+    metrics = compute_metrics.compute_metrics(Data=df, model_name=model_path,
+                                                column=outcome_col, sensitive_attr=sensitive_attr)
+      
     f = open('config/structure.json', 'r')
     structure_json = json.load(f)
 

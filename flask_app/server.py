@@ -9,8 +9,8 @@ import compute_metrics
 sys.path.append("..")
 
 # Please change database credentials here
-db_username = "your_username"
-db_password = "password"
+db_username = "root"
+db_password = ""
 db_database = "conformity_assessment"
 db_host = "localhost"
 db_port = "3306"
